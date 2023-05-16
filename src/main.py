@@ -3,8 +3,6 @@ from services.ReviewService import ReviewService
 from services.JSONEncoder import JSONEncoder
 from entities.ReviewViewModel import ReviewViewModel
 
-import numpy as np
-
 app = FastAPI()
 
 @app.get("/")
