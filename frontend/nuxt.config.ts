@@ -3,5 +3,8 @@ export default defineNuxtConfig({
     css: [
         "@/assets/style/_variables.scss",
         "@/assets/style/global.scss"
-    ]
+    ],
+    plugins: [
+        '@/plugins/naive'
+    ],
 })

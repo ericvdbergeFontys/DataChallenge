@@ -13,6 +13,7 @@
     "nuxt": "^3.4.3"
   },
   "dependencies": {
+    "naive-ui": "^2.34.3",
     "sass": "^1.62.1"
   }
 }
