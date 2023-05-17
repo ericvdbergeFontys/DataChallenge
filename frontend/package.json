@@ -10,10 +10,13 @@
   },
   "devDependencies": {
     "@types/node": "^18",
-    "nuxt": "^3.4.3"
+    "nuxt": "^3.5.0"
   },
   "dependencies": {
+    "@vicons/ionicons5": "^0.12.0",
     "naive-ui": "^2.34.3",
-    "sass": "^1.62.1"
+    "nuxt-icon": "^0.4.0",
+    "sass": "^1.62.1",
+    "unplugin-vue-components": "^0.24.1"
   }
 }
