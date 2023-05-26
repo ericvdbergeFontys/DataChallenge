@@ -8,6 +8,12 @@ class ReviewMapper:
 
         # Iterate over all the rows using iterrows()
         for _, row in dataframe.iterrows():
-            reviews = reviews + [ReviewViewModel(row['reviews.text'], row['sentiment'])]
+            reviews = reviews + [
+                ReviewViewModel(
+                    row['reviews.text'], 
+                    row['sentiment'],
+                    row['emotion']
+                )
+            ]
         
         return reviews
