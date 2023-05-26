@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Response
 from services.ReviewService import ReviewService
 from services.JSONEncoder import JSONEncoder
-from entities.ReviewViewModel import ReviewViewModel
+from mappers.ReviewMapper import ReviewMapper
 
 app = FastAPI()
 
@@ -13,9 +13,15 @@ async def root():
 async def reviews():
     # get the reviews that are flagged as negative by a sentiment analysis model
     reviewService = ReviewService()
-    reviews = reviewService.getReviews()
-    negativeReviews = reviewService.getNegativeReviews(reviews)
-
+    negativeReviews = reviewService.getNegativeReviews()
+    
     # encode the dataframe into json
-    json = JSONEncoder().fromDataFrame(negativeReviews)
+    negativeReviews_formatted = ReviewMapper.MapFromDataFrameToReviewViewModel(negativeReviews)
+    
+    json = JSONEncoder.fromEntities(negativeReviews_formatted)
     return Response(content=json, media_type="application/json")
+
+@app.post('/reviews')
+async def createReview():
+    print('test')
+    return {"message": "Succeeded!"}

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img src="/logo.png" class="logo"/>
+    <img src="/beep.png" class="logo"/>
     <n-menu
         :inverted="false"
         :collapsed-width="64"
