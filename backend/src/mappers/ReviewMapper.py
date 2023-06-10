@@ -12,7 +12,8 @@ class ReviewMapper:
                 ReviewViewModel(
                     row['reviews.text'], 
                     row['sentiment'],
-                    row['emotion']
+                    row['emotion'],
+                    row['cluster']
                 )
             ]
         

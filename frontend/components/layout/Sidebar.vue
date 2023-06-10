@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <img src="/beep.png" class="logo"/>
+  <div class="sidebar">
     <n-menu
         :inverted="false"
         :collapsed-width="64"
@@ -10,62 +9,69 @@
   </div>    
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { NIcon } from 'naive-ui'
+import { RouterLink } from 'vue-router'
 import {
-  Grid as DashboardIcon,
-  BarChart as InsightsIcon,
-  Cog as SettingsIcon,
-  Shirt as ProductsIcon,
-  BagCheck as OrdersIcon
+  Grid,
+  BarChart,
+  Cog,
+  Shirt,
+  BagCheck
 } from '@vicons/ionicons5'
 
-function renderIcon (icon: Component) {
+function renderIcon (icon) {
   return () => h(NIcon, null, { default: () => h(icon) })
+}
+
+function renderLink (to, label) {
+  return h(
+    RouterLink,
+    {
+      to: {
+          route: to,
+          params: {
+            lang: 'en-US'
+          }
+        }
+    },
+    label
+  )
 }
 
 const menuOptions = [
   {
-    label: 'Dashboard',
+    label: () => renderLink("index", "Dashboard"),
     key: 'dashboard',
-    icon: renderIcon(DashboardIcon),
+    icon: renderIcon(Grid),
     // href: '/'
   },
   {
-    label: () =>
-      h(
-      'a',
-      {
-        href: '/insights',
-      },
-      'Insights'
-    ),
+    label: () => renderLink("insights", "Insights"),
     key: 'insights',
-    icon: renderIcon(InsightsIcon),
-    href: '/insights'
+    icon: renderIcon(BarChart),
+    // href: '/insights'
   },
   {
-    label: 'Products',
+    label: () => renderLink("products", "Products"),
     key: 'products',
-    icon: renderIcon(ProductsIcon)
+    icon: renderIcon(Shirt)
   },
   {
-    label: 'Orders',
+    label: () => renderLink("orders", "Orders"),
     key: 'orders',
-    icon: renderIcon(OrdersIcon)
+    icon: renderIcon(BagCheck)
   },
   {
-    label: 'Settings',
+    label: () => renderLink("settings", "Settings"),
     key: 'settings',
-    icon: renderIcon(SettingsIcon)
+    icon: renderIcon(Cog)
   }
 ]
 </script>
 
 <style lang="scss">
-.logo {
-  width: 100%;
-  object-fit: cover;
-  margin-bottom: 10px;
+.sidebar {
+  padding: 50px 0px;
 }
 </style>
