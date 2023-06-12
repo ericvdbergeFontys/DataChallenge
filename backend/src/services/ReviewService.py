@@ -6,6 +6,7 @@ from sentence_transformers import SentenceTransformer
 from transformers import pipeline
 from entities.ReviewPostModel import ReviewPostModel
 from entities.ReviewViewModel import ReviewViewModel
+from tensorflow.keras.models import load_model
 
 class ReviewService:
     def __init__(self):
@@ -43,11 +44,15 @@ class ReviewService:
         # load model and classify label
         current_directory = os.getcwd()  # Get the current working directory
         parent_directory = os.path.abspath(os.path.join(current_directory, os.pardir))  # Get the absolute path of the parent directory
-        with open(f'{parent_directory}\\src\\\models\\review_classifier.pkl', 'rb') as file:
-            clusterClassifier = pickle.load(file)
-            embedder = SentenceTransformer('average_word_embeddings_glove.6B.300d')
-            embeddings = embedder.encode([reviewPost.text])
-            cluster = clusterClassifier.predict(embeddings)[0]
+        
+        clusterClassifier = load_model(f'{parent_directory}\\src\\\models\\review_classifier.keras')
+        embedder = SentenceTransformer('average_word_embeddings_glove.6B.300d')
+        embeddings = embedder.encode([reviewPost.text])
+        clusterEmbedding = clusterClassifier.predict(embeddings)
+        # Load the LabelEncoder object from the file
+        with open(f'{parent_directory}\\src\\\models\\label_encoder.pkl', 'rb') as f:
+            label_encoder = pickle.load(f)
+            cluster = label_encoder.inverse_transform(clusterEmbedding.argmax(axis=1))[0]
         
         #write to csv
         negative_emotions = ['annoyed', 'disappointed', 'anxious', 'jealous', 'angry', 'sentimental', 'sad',

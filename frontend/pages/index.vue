@@ -52,7 +52,7 @@ definePageMeta({
 let sendingReview = ref(false)
 
 // fetch products =================================
-const products = useProducts();
+const products = await useProducts();
 
 // bindable properties =================================
 let selectedProduct = ref()
