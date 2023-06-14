@@ -14,7 +14,6 @@ import { NIcon } from 'naive-ui'
 import { RouterLink } from 'vue-router'
 import {
   Grid,
-  BarChart,
   Cog,
   Shirt,
   BagCheck
@@ -26,44 +25,35 @@ function renderIcon (icon) {
 
 function renderLink (to, label) {
   return h(
-    RouterLink,
-    {
-      to: {
-          route: to,
-          params: {
-            lang: 'en-US'
+      RouterLink,
+      {
+          to: {
+            name: to,
           }
-        }
-    },
-    label
-  )
+      },
+      { default: () => label }
+    )
 }
 
 const menuOptions = [
   {
-    label: () => renderLink("index", "Dashboard"),
+    label: () => renderLink("dashboard", "Dashboard"),
     key: 'dashboard',
     icon: renderIcon(Grid),
     // href: '/'
   },
   {
-    label: () => renderLink("insights", "Insights"),
-    key: 'insights',
-    icon: renderIcon(BarChart),
-    // href: '/insights'
-  },
-  {
-    label: () => renderLink("products", "Products"),
+    label: () => renderLink("dashboard-products", "Products"),
     key: 'products',
     icon: renderIcon(Shirt)
   },
   {
-    label: () => renderLink("orders", "Orders"),
+    label: () => renderLink("dashboard-orders", "Orders"),
     key: 'orders',
     icon: renderIcon(BagCheck)
   },
   {
-    label: () => renderLink("settings", "Settings"),
+    label: () => renderLink("dashboard-settings", "Settings"),
     key: 'settings',
     icon: renderIcon(Cog)
   }

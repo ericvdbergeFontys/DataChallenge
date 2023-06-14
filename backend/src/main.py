@@ -2,8 +2,11 @@ from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 
 from entities.ReviewPostModel import ReviewPostModel
+from entities.ProductAnalyticsPostModel import ProductAnalyticsPostModel
 
 from services.ReviewService import ReviewService
+from services.AnalyticsService import AnalyticsService
+
 from services.JSONEncoder import JSONEncoder
 from mappers.ReviewMapper import ReviewMapper
 from mappers.ProductMapper import ProductMapper
@@ -28,8 +31,6 @@ async def products():
     reviewService = ReviewService()
     negativeReviews = reviewService.getReviews()
     negativeReviews = negativeReviews.drop_duplicates(subset=['name'], keep='first')
-
-    # negativeReviews['name'] = negativeReviews['name'].unique()
 
     # encode the dataframe into json
     productEntities = ProductMapper.MapFromDataFrameToProductViewModel(negativeReviews)
@@ -57,3 +58,25 @@ async def createReview(request: ReviewPostModel):
     json = JSONEncoder.fromEntities([review])
 
     return Response(content=json, media_type="application/json")
+
+@app.post('/analytics/product')
+async def productAnalytics(product: ProductAnalyticsPostModel):
+    analyticsService = AnalyticsService()
+    valueCounts = analyticsService.productAnalytics(product.productName);
+    json = JSONEncoder.fromObjects(valueCounts)
+    return Response(content=json, media_type="application/json")
+
+@app.get('/analytics/worst-products')
+async def worstProductsAnalytics():
+    analyticsService = AnalyticsService()
+    worstProductNames = analyticsService.worstProductAnalysis()
+    json = JSONEncoder.fromDataFrame(worstProductNames)
+    return Response(content=json, media_type="application/json")
+
+@app.get('/analytics/worst-issues')
+async def worstProblemsAnalytics():
+    analyticsService = AnalyticsService()
+    worstProblems = analyticsService.worstProbmlemAnalysis()
+    json = JSONEncoder.fromDataFrame(worstProblems)
+    return Response(content=json, media_type="application/json")
+    

@@ -14,3 +14,7 @@ class JSONEncoder:
     def fromEntities(entities):
         jsonData =  json.dumps([e.__dict__ for e in entities], indent=4)
         return jsonData
+    
+    def fromObjects(objects):
+        jsonData = json.dumps(objects.to_dict())
+        return jsonData;

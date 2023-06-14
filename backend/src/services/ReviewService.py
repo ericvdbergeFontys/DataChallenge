@@ -17,7 +17,7 @@ class ReviewService:
     def getReviews(self):
         if len(self.reviews) <= 0:
             useColumns = ['reviews.text', 'name']
-            data = pd.read_csv("./data/amazon_product_reviews.csv", usecols=useColumns, nrows=self.maxnRows)
+            data = pd.read_csv("./data/amazon_product_reviews.csv", usecols=useColumns)
             self.reviews = data
             return data
         else:
@@ -28,7 +28,7 @@ class ReviewService:
             # amazon_negative_sentiment&emotion_reviews.csv is created in a jupyter notebook with a sentiment analysis and a
             # emotion classification model.I saved that dataframe into this new csv, this is what we are reading into memory here.
             useColumns = ["reviews.text", 'sentiment', 'emotion', 'name', 'cluster']
-            data = pd.read_csv("./data/amazon_clustered_reviews.csv", usecols=useColumns, nrows=self.maxnRows)
+            data = pd.read_csv("./data/amazon_clustered_reviews.csv", usecols=useColumns)
             self.negativeReviews = data
             return data
         else:

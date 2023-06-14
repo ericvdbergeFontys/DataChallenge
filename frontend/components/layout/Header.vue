@@ -10,18 +10,12 @@
 
 <style lang="scss" scoped>
 .n-layout-header {
-    // width: 100%;
-    height: 55px;
     box-sizing: border-box;
-    // padding: 3px 20px;
-    // display: flex;
-    // justify-content: space-between;
-    // align-items: center;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 10px;
-    padding: 0 20px !important;
+    padding: 20px 20px !important;
     background: #333;
     
     > * {

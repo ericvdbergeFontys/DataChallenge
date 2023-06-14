@@ -1,45 +1,45 @@
 <template>
     <div>
-            <div class="layout">
-                <n-grid x-gap="12" :cols="3">
-                    <n-gi :span="2" class="container">
-                        <n-h1>Place your reviews on our trusted platform!</n-h1>
-                        <img src="/reviews-banner.png"/>
-                        <n-select
-                            v-model:value="selectedProduct"
-                            placeholder="Select"
-                            :options="products"
-                            size="large"
+        <div class="layout">
+            <n-grid x-gap="12" :cols="3">
+                <n-gi :span="2" class="container">
+                    <n-h1>Place your reviews on our trusted platform!</n-h1>
+                    <img src="/reviews-banner.png"/>
+                    <n-select
+                        v-model:value="selectedProduct"
+                        placeholder="Select"
+                        :options="products"
+                        size="large"
+                    />
+                    <n-input
+                        maxlength="200"
+                        type="textarea"
+                        placeholder="What do you want to review?"
+                        v-model:value="reviewText"
+                    />
+                    <n-button @click="sendReview" type="info" style="height: 40px;">
+                        <n-spin v-show="sendingReview" :size="20" class="n-spin" stroke="white" />
+                        Send your review!
+                    </n-button>
+                </n-gi>
+                <n-gi>
+                    <n-card
+                        title="Classification"
+                        :segmented="{
+                            content: true,
+                        }"
+                    >
+                        <n-spin v-if="sendingReview" size="large" style="width: 100%; margin: 0 auto; padding: 20px;" stroke="black" />
+                        <n-data-table
+                            v-else
+                            :columns="columns"
+                            :data="[classification]"
+                            :bordered="false"
                         />
-                        <n-input
-                            maxlength="200"
-                            type="textarea"
-                            placeholder="What do you want to review?"
-                            v-model:value="reviewText"
-                        />
-                        <n-button @click="sendReview" type="info" style="height: 40px;">
-                            <n-spin v-show="sendingReview" :size="20" class="n-spin" stroke="white" />
-                            Send your review!
-                        </n-button>
-                    </n-gi>
-                    <n-gi>
-                        <n-card
-                            title="Classification"
-                            :segmented="{
-                                content: true,
-                            }"
-                        >
-                            <n-spin v-if="sendingReview" size="large" style="width: 100%; margin: 0 auto; padding: 20px;" stroke="black" />
-                            <n-data-table
-                                v-else
-                                :columns="columns"
-                                :data="[classification]"
-                                :bordered="false"
-                            />
-                        </n-card>
-                    </n-gi>
-                </n-grid>
-            </div>
+                    </n-card>
+                </n-gi>
+            </n-grid>
+        </div>
     </div>
 </template>
 
